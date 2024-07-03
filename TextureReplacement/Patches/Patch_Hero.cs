@@ -4,8 +4,11 @@ using SuperFantasyKingdom;
 using SuperFantasyKingdom.Tavern;
 using SuperFantasyKingdom.TitleScreen;
 using SuperFantasyKingdom.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Xml.Linq;
 
 namespace TextureReplacement.Patches
 {
@@ -143,24 +146,41 @@ namespace TextureReplacement.Patches
             }
         }
 
-        
-        //[HarmonyPatch(typeof(TavernStatistics), nameof(TavernStatistics.GenerateDamageMeter), new[] { typeof(UnitBase) })]
-        //static class Patch_TavernStatistics_GenerateDamageMeter
-        //{
 
-        //    [HarmonyPostfix]
-        //    static void Postfix(UIOverlayGameOverUnit __instance, UnitBase unit)
-        //    {
-        //        string name = unit.entityType.ToString();
-        //        Sprite icon = TextureReplacement.GetSprite(TextureReplacement.SpritesIcons, name);
+        [HarmonyPatch(typeof(TavernStatistics), nameof(TavernStatistics.GenerateDamageMeter))]
+        static class Patch_TavernStatistics_GenerateDamageMeter
+        {
 
-        //        if (icon != null)
-        //        {
-        //            __instance.icon.sprite = icon;
-        //        }
+            [HarmonyPostfix]
+            static void Postfix(TavernStatistics __instance)
+            {
 
-        //    }
-        //}
+                Transform transform = __instance.transform.Find("DamageMeterContainer/DamageMeter/ViewPort/Content");
+
+                foreach (Transform child in transform)
+                {
+                    Transform nameTrans = child.Find("Name");
+                    Transform iconTrans = child.Find("Icon");
+
+                    if (nameTrans != null && iconTrans!=null)
+                    {
+                        TextMeshProUGUI textMeshProUGUI = nameTrans.GetComponent<TextMeshProUGUI>();
+                        if(textMeshProUGUI != null)
+                        {
+                            string[] splits=textMeshProUGUI.text.Split(new string[] { ". " },StringSplitOptions.RemoveEmptyEntries);
+                            string unit=splits[splits.Length - 1];
+                            Sprite icon = TextureReplacement.GetSprite(TextureReplacement.SpritesIcons, unit);
+
+                            if (icon != null)
+                            {
+                                iconTrans.GetComponent<Image>().sprite = icon;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
 
 
 

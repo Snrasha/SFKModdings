@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TextureReplacement
 {
-    public class SwapTextureSlow : MonoBehaviour
+    public class WorkerSwapTextureSlow : MonoBehaviour
     {
         public Texture2D texture;
         //public string nameused;
@@ -67,22 +67,22 @@ namespace TextureReplacement
         {
             //string nameused = spriteRenderer.sprite.name;
             //string[] split = nameused.Split('_');
-            float width = spriteRenderer.sprite.rect.width;
-            float height = spriteRenderer.sprite.rect.height;
+            float width = texture.width/4;
+            float height = texture.height/5;
 
             //nameused = split[0];
 
-
+            // King, Pet ?
             if (type == 1)
             {
-                int[] li = new int[] { 0, 1, 4 };
+                int[] li = new int[] { 4,1,0 };
                 nb = 0;
 
                 for (int k = 0; k < 4; k++)
                 {
                     foreach (int i in li)
                     {
-                        Rect rect2 = new Rect(k * width, (i) * height, width, height);
+                        Rect rect2 = new Rect(k * width, i * height, width, height);
                         //spriteSheet.Add(nameused + "_" + inc, Sprite.Create(texture, rect2, 0.5f * Vector2.one, 16f));
 
                         spriteSheetUnused.Add(nb + "", Sprite.Create(texture, rect2, 0.5f * Vector2.one, 16f));

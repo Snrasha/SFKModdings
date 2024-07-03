@@ -23,7 +23,10 @@
       <HintPath>..\netstandard.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Localization">
-      <HintPath>..\Super Fantasy Kingdom_Data\Managed\Unity.Localization.dll</HintPath>
+      <HintPath>..\..\Super Fantasy Kingdom_Data\Managed\Unity.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\..\Super Fantasy Kingdom_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
